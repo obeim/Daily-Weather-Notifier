@@ -1,11 +1,15 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import weatherRoutes from "./routes/weather.js";
 
 const server = Fastify({
   logger: true,
 });
 
 server.register(cors, { origin: true });
+
+// routes
+server.register(weatherRoutes);
 
 server.get("/", async () => {
   return { message: "API is running" };
