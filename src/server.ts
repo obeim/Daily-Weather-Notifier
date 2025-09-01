@@ -9,7 +9,7 @@ const server = Fastify({
 server.register(cors, { origin: true });
 
 // routes
-server.register(weatherRoutes);
+server.register(weatherRoutes, { prefix: "/api/v1" });
 
 server.get("/", async () => {
   return { message: "API is running" };
