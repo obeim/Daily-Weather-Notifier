@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import ratelimit from "@fastify/rate-limit";
+import fastifyRedis from "@fastify/redis";
 import weatherRoutes from "./routes/weather.js";
 import config from "./config.js";
 
@@ -11,6 +12,12 @@ const server = Fastify({
 await server.register(ratelimit, {
   max: config.maxRequests,
   timeWindow: config.maxRequestsWindow,
+});
+
+await server.register(fastifyRedis, {
+  host: config.redis.host,
+  port: config.redis.port,
+  password: config.redis.password,
 });
 
 server.register(cors, { origin: true });
