@@ -4,6 +4,7 @@ import ratelimit from "@fastify/rate-limit";
 import fastifyRedis from "@fastify/redis";
 import weatherRoutes from "./routes/weather.js";
 import config from "./config.js";
+import prismaPlugin from "./plugins/prisma.js";
 
 const server = Fastify({
   logger: true,
@@ -19,6 +20,8 @@ await server.register(fastifyRedis, {
   port: config.redis.port,
   password: config.redis.password,
 });
+
+server.register(prismaPlugin);
 
 server.register(cors, { origin: true });
 
