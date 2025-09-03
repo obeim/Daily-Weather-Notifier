@@ -3,22 +3,22 @@ import cors from "@fastify/cors";
 import ratelimit from "@fastify/rate-limit";
 import fastifyRedis from "@fastify/redis";
 import weatherRoutes from "./routes/weather.js";
-import config from "./config.js";
 import prismaPlugin from "./plugins/prisma.js";
+import env from "./config/env.js";
 
 const server = Fastify({
   logger: true,
 });
 
 await server.register(ratelimit, {
-  max: config.maxRequests,
-  timeWindow: config.maxRequestsWindow,
+  max: env.maxRequests,
+  timeWindow: env.maxRequestsWindow,
 });
 
 await server.register(fastifyRedis, {
-  host: config.redis.host,
-  port: config.redis.port,
-  password: config.redis.password,
+  host: env.redis.host,
+  port: env.redis.port,
+  password: env.redis.password,
 });
 
 server.register(prismaPlugin);
@@ -33,8 +33,8 @@ server.get("/", async () => {
 });
 
 try {
-  await server.listen({ port: config.port, host: config.host });
-  server.log.info(`Server listening on http://${config.host}:${config.port}`);
+  await server.listen({ port: env.port, host: env.host });
+  server.log.info(`Server listening on http://${env.host}:${env.port}`);
 } catch (err) {
   server.log.error(err);
   process.exit(1);

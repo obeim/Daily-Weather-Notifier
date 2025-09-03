@@ -1,10 +1,10 @@
 import { FastifyPluginCallbackTypebox } from "@fastify/type-provider-typebox";
-import {
-  getWeatherQueryParams,
-  subscribeQueryParams,
-} from "../schemas/params.js";
+import { getWeatherQueryParams } from "../validations/weather.js";
 import { getWeatherForecast } from "../helpers/api.js";
-import { addSubscriberBody } from "../schemas/bodies.js";
+import {
+  addSubscriberBody,
+  subscribeQueryParams,
+} from "../validations/subscriber.js";
 
 const weatherRoutes: FastifyPluginCallbackTypebox = (fastify, opts) => {
   const { redis, prisma } = fastify;

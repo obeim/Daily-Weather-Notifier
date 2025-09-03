@@ -7,3 +7,7 @@ export const addSubscriberBody = Type.Object({
   }),
   frequency: Type.Optional(Type.Enum(Frequency)),
 });
+
+export const subscribeQueryParams = Type.Object({
+  unsubscribe: Type.Optional(Type.Boolean()),
+});
