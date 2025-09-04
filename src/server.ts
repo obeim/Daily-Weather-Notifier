@@ -5,6 +5,7 @@ import fastifyRedis from "@fastify/redis";
 import weatherRoutes from "./routes/weather.js";
 import prismaPlugin from "./plugins/prisma.js";
 import env from "./config/env.js";
+import { setupScheduler } from "./workers/scheduler-setup.js";
 
 const server = Fastify({
   logger: true,
@@ -35,6 +36,7 @@ server.get("/", async () => {
 try {
   await server.listen({ port: env.port, host: env.host });
   server.log.info(`Server listening on http://${env.host}:${env.port}`);
+  setupScheduler();
 } catch (err) {
   server.log.error(err);
   process.exit(1);

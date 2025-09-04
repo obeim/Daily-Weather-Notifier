@@ -17,7 +17,7 @@ const weatherRoutes: FastifyPluginCallbackTypebox = (fastify, opts) => {
       if (cachedData) {
         return JSON.parse(cachedData);
       }
-      const data = await getWeatherForecast(lat, long);
+      const data = await getWeatherForecast(lat, long, true);
       await redis.set(
         `weather:${lat},${long}`,
         JSON.stringify(data),
