@@ -5,6 +5,7 @@ export const addSubscriberBody = Type.Object({
   email: Type.String({
     format: "email",
   }),
+  countryCode: Type.String(),
   frequency: Type.Optional(Type.Enum(Frequency)),
 });
 

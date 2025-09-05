@@ -36,7 +36,6 @@ server.get("/", async () => {
 try {
   await server.listen({ port: env.port, host: env.host });
   server.log.info(`Server listening on http://${env.host}:${env.port}`);
-  setupScheduler();
 } catch (err) {
   server.log.error(err);
   process.exit(1);

@@ -6,6 +6,8 @@ import {
   subscribeQueryParams,
 } from "../validations/subscriber.js";
 
+import countries from "../helpers/loadCountries.js";
+
 const weatherRoutes: FastifyPluginCallbackTypebox = (fastify, opts) => {
   const { redis, prisma } = fastify;
   fastify.get(
@@ -32,8 +34,12 @@ const weatherRoutes: FastifyPluginCallbackTypebox = (fastify, opts) => {
     "/subscribe",
     { schema: { body: addSubscriberBody, querystring: subscribeQueryParams } },
     async (request, reply) => {
-      const { email } = request.body;
+      const { email, countryCode } = request.body;
       const { unsubscribe } = request.query;
+
+      const country = countries.filter((item) => item.code === countryCode)[0];
+
+      if (!country) reply.status(400).send({ message: "Invalid Country Code" });
 
       const user = await prisma.subscriber.findUnique({
         where: { email: email },
@@ -51,7 +57,15 @@ const weatherRoutes: FastifyPluginCallbackTypebox = (fastify, opts) => {
           .status(403)
           .send({ message: "User is Already Subscribed" });
 
-      await prisma.subscriber.create({ data: request.body });
+      await prisma.subscriber.create({
+        data: {
+          email: request.body.email,
+          frequency: request.body.frequency,
+          country: country.name,
+          lat: country.lat,
+          long: country.lon,
+        },
+      });
       return { message: "User subscribed" };
     }
   );

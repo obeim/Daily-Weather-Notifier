@@ -18,8 +18,9 @@ model Subscriber {
   id    Int     @id @default(autoincrement())  
   email String  @unique
   frequency  Frequency @default(DAILY)
-  lastSentAt DateTime?
-
+  country String
+  lat Decimal
+  long Decimal
 }  
 
 enum Frequency {
