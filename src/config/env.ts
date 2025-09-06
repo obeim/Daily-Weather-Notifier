@@ -10,6 +10,11 @@ const env = {
     port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
     password: process.env.REDIS_PASSWORD,
   },
+  nodemailer: {
+    service: process.env.NODEMAILER_EMAIL_SERVICE,
+    user: process.env.NODEMAILER_USER,
+    pass: process.env.NODEMAILER_PASS,
+  },
 };
 
 export default env;
