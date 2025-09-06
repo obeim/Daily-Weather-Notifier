@@ -25,7 +25,3 @@ The system fetches weather data, caches results by location, and distributes ema
 - **TypeScript** – Strict typing
 
 ---
-
-## ⚙️ Setup & Installation
-
-### 1️⃣ Clone the repo
