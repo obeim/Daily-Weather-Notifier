@@ -9,6 +9,7 @@ const env = {
     : 10,
   maxRequestsWindow: process.env.MAX_REQUESTS_WINDOW || "1 minute",
   host: process.env.HOST || "0.0.0.0",
+  database_url: process.env.DATABASE_URL,
   redis: {
     host: process.env.REDIS_HOST || "127.0.0.1",
     port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
