@@ -49,3 +49,20 @@ export interface Daily {
   relative_humidity_2m_max?: number[] | null;
   relative_humidity_2m_min?: number[] | null;
 }
+
+export interface EmailJobData {
+  email: string;
+  forecast: {
+    location: {
+      latitude: number;
+      longitude: number;
+      timezone: string;
+    };
+    current: {
+      temperature: string;
+      windspeed: string;
+      weathercode: string;
+    };
+    country: string;
+  };
+}

@@ -5,7 +5,6 @@ import fastifyRedis from "@fastify/redis";
 import weatherRoutes from "./routes/weather.js";
 import prismaPlugin from "./plugins/prisma.js";
 import env from "./config/env.js";
-import { setupScheduler } from "./workers/scheduler-setup.js";
 
 const server = Fastify({
   logger: true,

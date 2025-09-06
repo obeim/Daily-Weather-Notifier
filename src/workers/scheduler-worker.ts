@@ -3,6 +3,7 @@ import { connection } from "../config/redis.js";
 import { Frequency, PrismaClient } from "@prisma/client";
 import { emailQueue } from "../queues/emailQueue.js";
 import { getWeatherForecast } from "../helpers/api.js";
+import { formatWeatherData } from "../helpers/utils.js";
 
 const prisma = new PrismaClient();
 
@@ -49,14 +50,18 @@ const createForecastEmailJobs = async (frequency: Frequency) => {
         Number(subscribers[0].long)
       );
 
-      await connection.set(todayKey, JSON.stringify(forecast), "EX", 43200); // expire in 12 hrs
+      await connection.set(
+        todayKey,
+        JSON.stringify({ ...forecast, country }),
+        "EX",
+        43200
+      ); // expire in 12 hrs
     }
-    console.log(subscribers);
 
     await emailQueue.addBulk(
       subscribers.map((user) => ({
         name: "sendForecast",
-        data: { email: user.email, forecast },
+        data: { email: user.email, forecast: { ...forecast, country } },
       }))
     );
   }

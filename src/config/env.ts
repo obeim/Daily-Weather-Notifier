@@ -1,3 +1,7 @@
+// config/env.ts
+import dotenv from "dotenv";
+dotenv.config();
+
 const env = {
   port: process.env.PORT ? parseInt(process.env.PORT) : 4000,
   maxRequests: process.env.MAX_REQUESTS
